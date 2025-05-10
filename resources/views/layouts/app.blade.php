@@ -311,7 +311,7 @@
                         <a href="#" class="social-icon text-gray-400 hover:text-blue-400 text-lg transition-colors duration-300">
                             <i class="fab fa-twitter"></i>
                         </a>
-                        <a href="#" class="social-icon text-gray-400 hover:text-pink-500 text-lg transition-colors duration-300">
+                        <a href="https://www.instagram.com/xipplgc.nesapa_" class="social-icon text-gray-400 hover:text-pink-500 text-lg transition-colors duration-300">
                             <i class="fab fa-instagram"></i>
                         </a>
                         <a href="#" class="social-icon text-gray-400 hover:text-red-500 text-lg transition-colors duration-300">
