@@ -26,7 +26,7 @@ Proyek ini dibuat menggunakan framework **Laravel**, dan berfungsi sebagai pusat
 ## ⚙️ Instalasi Lokal
 
 ```bash
-git clone git@github.com:SakumDisiniPa/pplgc.git
+git clone https://github.com/SakumDisiniPa/pplgc.git
 cd pplgc
 
 # Install dependencies
