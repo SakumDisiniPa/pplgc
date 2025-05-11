@@ -113,6 +113,36 @@
             transform: translateY(-5px);
             @apply shadow-lg;
         }
+
+        .line-clamp-2 {
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        }
+
+        .btn-primary {
+            @apply bg-primary-600 text-white px-4 py-2 rounded-lg hover:bg-primary-700 transition-colors;
+        }
+
+        .prose img {
+        max-width: 100%;
+        height: auto;
+        border-radius: 0.5rem;
+        margin: 1rem 0;
+        }
+        .prose pre {
+            background-color: #f8fafc;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            overflow-x: auto;
+        }
+        .prose code {
+            background-color: #f1f5f9;
+            padding: 0.2rem 0.4rem;
+            border-radius: 0.25rem;
+            font-family: monospace;
+        }
         
         /* Button Pulse Effect */
         @keyframes pulse {
@@ -142,6 +172,27 @@
             animation: fadeInUp 0.8s ease-out forwards;
         }
     </style>
+    <style>
+    /* Animasi untuk lightbox */
+    #lightbox {
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+    
+    #lightbox:not(.hidden) {
+        opacity: 1;
+        display: flex !important;
+    }
+    
+    #lightbox img {
+        transform: scale(0.95);
+        transition: transform 0.3s ease;
+    }
+    
+    #lightbox:not(.hidden) img {
+        transform: scale(1);
+    }
+</style>
 </head>
 <body class="font-inter">
     <!-- Navigation -->
@@ -218,7 +269,7 @@
                         Masuk
                     </a>
                     <a href="{{ route('register') }}" class="btn-gradient text-white px-6 py-2 rounded-lg font-medium hover:shadow-lg transition-all duration-300 relative overflow-hidden group">
-                        <span class="relative z-10">Daftar</span>
+                    <span class="relative z-10 text-blue-500">Daftar</span>
                         <span class="absolute inset-0 bg-gradient-to-r from-primary-700 to-secondary-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
                     </a>
                     @endauth
@@ -384,12 +435,8 @@
             
             <div class="mt-16 pt-8 border-t border-gray-800 text-center">
                 <p class="text-gray-500 text-sm">
-                    &copy; {{ date('Y') }} XI PPLG C. Developer By Sakum.
+                    &copy; {{ date('Y') }} XI PPLG C. Powered By Sakum.
                 </p>
-                <div class="mt-4 flex justify-center space-x-6">
-                    <a href="#" class="text-gray-500 hover:text-primary-500 transition-colors duration-300 text-xs">Kebijakan Privasi</a>
-                    <a href="#" class="text-gray-500 hover:text-primary-500 transition-colors duration-300 text-xs">Syarat Layanan</a>
-                    <a href="#" class="text-gray-500 hover:text-primary-500 transition-colors duration-300 text-xs">Peta Situs</a>
                 </div>
             </div>
         </div>
@@ -408,6 +455,229 @@
     
     <!-- Alpine JS -->
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+
+    <script>
+    function shareToFacebook(url) {
+        window.open('https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(url), '_blank', 'width=600,height=400');
+    }
+
+    function shareToTwitter(url, text) {
+        window.open('https://twitter.com/intent/tweet?text=' + encodeURIComponent(text) + '&url=' + encodeURIComponent(url), '_blank', 'width=600,height=400');
+    }
+
+    function shareToWhatsApp(url, text) {
+        window.open('https://wa.me/?text=' + encodeURIComponent(text + ' - ' + url), '_blank', 'width=600,height=400');
+    }
+
+    function copyLink(url) {
+        navigator.clipboard.writeText(url).then(function() {
+            alert('Tautan berhasil disalin!');
+        }, function() {
+            alert('Gagal menyalin tautan');
+        });
+    }
+</script>
+
+<!--galeri create-->
+
+<!--galeri show-->
+<script>
+    // Lightbox functionality
+    function openLightbox(imageUrl) {
+        document.getElementById('lightbox-image').src = imageUrl;
+        document.getElementById('lightbox').classList.remove('hidden');
+        document.body.classList.add('overflow-hidden');
+    }
+    
+    function closeLightbox() {
+        document.getElementById('lightbox').classList.add('hidden');
+        document.body.classList.remove('overflow-hidden');
+    }
+    
+    // Close lightbox when clicking outside image
+    document.getElementById('lightbox').addEventListener('click', function(e) {
+        if (e.target === this) {
+            closeLightbox();
+        }
+    });
+    
+    // Close with ESC key
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') {
+            closeLightbox();
+        }
+    });
+</script>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const dropArea = document.getElementById('drop-area');
+        const browseBtn = document.getElementById('browse-btn');
+        const fileInput = document.createElement('input');
+        fileInput.type = 'file';
+        fileInput.multiple = true;
+        fileInput.accept = 'image/*';
+        fileInput.style.display = 'none';
+        document.body.appendChild(fileInput);
+        
+        let files = [];
+        const maxFiles = 10;
+        const maxSize = 5 * 1024 * 1024; // 2MB
+        
+        // Handle click on browse button
+        browseBtn.addEventListener('click', () => fileInput.click());
+        
+        // Handle file selection via file input
+        fileInput.addEventListener('change', function() {
+            handleFiles(this.files);
+            this.value = ''; // Reset to allow selecting same files again
+        });
+        
+        // Prevent default drag behaviors
+        ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+            dropArea.addEventListener(eventName, preventDefaults, false);
+        });
+        
+        // Highlight drop area when item is dragged over it
+        ['dragenter', 'dragover'].forEach(eventName => {
+            dropArea.addEventListener(eventName, highlight, false);
+        });
+        
+        ['dragleave', 'drop'].forEach(eventName => {
+            dropArea.addEventListener(eventName, unhighlight, false);
+        });
+        
+        // Handle dropped files
+        dropArea.addEventListener('drop', handleDrop, false);
+        
+        function preventDefaults(e) {
+            e.preventDefault();
+            e.stopPropagation();
+        }
+        
+        function highlight() {
+            dropArea.classList.add('highlight');
+        }
+        
+        function unhighlight() {
+            dropArea.classList.remove('highlight');
+        }
+        
+        function handleDrop(e) {
+            const dt = e.dataTransfer;
+            const droppedFiles = dt.files;
+            handleFiles(droppedFiles);
+        }
+        
+        function handleFiles(newFiles) {
+            if (files.length + newFiles.length > maxFiles) {
+                alert(`Anda hanya dapat mengupload maksimal ${maxFiles} gambar`);
+                return;
+            }
+            
+            for (let i = 0; i < newFiles.length; i++) {
+                const file = newFiles[i];
+                
+                if (!file.type.match('image.*')) {
+                    alert(`File ${file.name} bukan gambar yang valid`);
+                    continue;
+                }
+                
+                if (file.size > maxSize) {
+                    alert(`File ${file.name} melebihi ukuran maksimal 2MB`);
+                    continue;
+                }
+                
+                files.push(file);
+                addPreview(file);
+            }
+            
+            updateFormData();
+        }
+        
+        function addPreview(file) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const container = document.getElementById('image-upload-container');
+                const previewId = 'preview-' + Date.now() + '-' + Math.floor(Math.random() * 1000);
+                
+                const previewElement = document.createElement('div');
+                previewElement.className = 'preview-container';
+                previewElement.id = previewId;
+                previewElement.innerHTML = `
+                    <img src="${e.target.result}" class="preview-image" alt="${file.name}">
+                    <div class="preview-info">
+                        <div class="preview-name">${file.name}</div>
+                        <div class="preview-size">${formatFileSize(file.size)}</div>
+                    </div>
+                    <div class="preview-remove" onclick="removePreview('${previewId}')">
+                        <i class="fas fa-times"></i>
+                    </div>
+                `;
+                
+                container.appendChild(previewElement);
+            };
+            reader.readAsDataURL(file);
+        }
+        
+        function removePreview(id) {
+            const previewElement = document.getElementById(id);
+            if (previewElement) {
+                const fileName = previewElement.querySelector('.preview-name').textContent;
+                files = files.filter(file => file.name !== fileName);
+                previewElement.remove();
+                updateFormData();
+            }
+        }
+        
+        function updateFormData() {
+            const form = document.getElementById('forum-form');
+            const existingInputs = form.querySelectorAll('input[name="images[]"]');
+            existingInputs.forEach(input => input.remove());
+            
+            files.forEach(file => {
+                const input = document.createElement('input');
+                input.type = 'file';
+                input.name = 'images[]';
+                input.style.display = 'none';
+                
+                // Create a new DataTransfer object and add the file
+                const dataTransfer = new DataTransfer();
+                dataTransfer.items.add(file);
+                input.files = dataTransfer.files;
+                
+                form.appendChild(input);
+            });
+        }
+        
+        function formatFileSize(bytes) {
+            if (bytes === 0) return '0 Bytes';
+            const k = 1024;
+            const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+            const i = Math.floor(Math.log(bytes) / Math.log(k));
+            return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+        }
+        
+        // Make removePreview function available globally
+        window.removePreview = removePreview;
+        
+        // Form submission validation
+        document.getElementById('forum-form').addEventListener('submit', function(e) {
+            let isValid = true;
+            
+            files.forEach(file => {
+                if (file.size > maxSize) {
+                    alert(`File ${file.name} melebihi ukuran maksimal 2MB`);
+                    isValid = false;
+                }
+            });
+            
+            if (!isValid) {
+                e.preventDefault();
+            }
+        });
+    });
+</script>
     
     <script>
         // Initialize AOS

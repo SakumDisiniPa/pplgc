@@ -27,7 +27,7 @@
                     <div class="absolute -bottom-8 -right-8 w-32 h-32 bg-secondary-400 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-2000"></div>
                     <div class="absolute top-0 -right-4 w-32 h-32 bg-yellow-400 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-4000"></div>
                     <div class="relative bg-white p-1 rounded-2xl shadow-xl">
-                        <img src="https://source.unsplash.com/random/600x400/?classroom" alt="Kelas XI PPLG C" class="rounded-xl w-full h-auto">
+                        <img src="{{ asset('images/classroom.jpg') }}" alt="Kelas XI PPLG C" class="rounded-xl w-full h-auto">
                     </div>
                 </div>
             </div>
@@ -36,25 +36,25 @@
     <div class="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-white to-transparent"></div>
 </section>
 
-<!-- Quick Info Section -->
+<!-- Dashboard Stats Section -->
 <section class="py-12 bg-white">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
             <div class="p-6 rounded-xl bg-gray-50 border border-gray-100" data-aos="fade-up">
-                <div class="text-3xl font-bold text-primary-600 mb-2">36</div>
-                <div class="text-gray-600 text-sm font-medium">Siswa</div>
+                <div class="text-3xl font-bold text-primary-600 mb-2">{{ $siswaCount }}</div>
+                <div class="text-gray-600 text-sm font-medium">Jumlah Siswa</div>
             </div>
             <div class="p-6 rounded-xl bg-gray-50 border border-gray-100" data-aos="fade-up" data-aos-delay="100">
-                <div class="text-3xl font-bold text-secondary-600 mb-2">12</div>
-                <div class="text-gray-600 text-sm font-medium">Kegiatan</div>
+                <div class="text-3xl font-bold text-secondary-600 mb-2">{{ $kegiatanCount }}</div>
+                <div class="text-gray-600 text-sm font-medium">Jumlah Kegiatan</div>
             </div>
             <div class="p-6 rounded-xl bg-gray-50 border border-gray-100" data-aos="fade-up" data-aos-delay="200">
-                <div class="text-3xl font-bold text-yellow-600 mb-2">8</div>
-                <div class="text-gray-600 text-sm font-medium">Prestasi</div>
+                <div class="text-3xl font-bold text-yellow-600 mb-2">{{ $guruCount }}</div>
+                <div class="text-gray-600 text-sm font-medium">Jumlah Guru</div>
             </div>
             <div class="p-6 rounded-xl bg-gray-50 border border-gray-100" data-aos="fade-up" data-aos-delay="300">
-                <div class="text-3xl font-bold text-purple-600 mb-2">24</div>
-                <div class="text-gray-600 text-sm font-medium">Postingan</div>
+                <div class="text-3xl font-bold text-purple-600 mb-2">Rp {{ number_format($kasCount, 0, ',', '.') }}</div>
+                <div class="text-gray-600 text-sm font-medium">Jumlah Uang Kas</div>
             </div>
         </div>
     </div>
@@ -68,7 +68,7 @@
                 Fitur <span class="gradient-text">Website Kami</span>
             </h2>
             <p class="text-lg text-gray-600 max-w-3xl mx-auto" data-aos="fade-up" data-aos-delay="100">
-                Website ini dibuat untuk memudahkan komunikasi dan berbagi informasi antar anggota kelas X IPPLG C.
+                Website ini dibuat untuk memudahkan komunikasi dan berbagi informasi antar anggota kelas XI PPLG C.
             </p>
         </div>
         
@@ -98,121 +98,39 @@
             <!-- Feature 3 -->
             <div class="bg-white rounded-xl p-8 border border-gray-100 shadow-sm hover:shadow-md transition-shadow duration-300" data-aos="fade-up" data-aos-delay="400">
                 <div class="w-16 h-16 bg-purple-100 rounded-lg flex items-center justify-center mb-6">
-                    <i class="fas fa-users text-2xl text-purple-600"></i>
+                    <i class="fas fa-wallet text-2xl text-purple-600"></i>
                 </div>
-                <h3 class="text-xl font-bold text-gray-900 mb-3">Forum Diskusi</h3>
+                <h3 class="text-xl font-bold text-gray-900 mb-3">Kas Kelas</h3>
                 <p class="text-gray-600">
-                    Diskusikan materi pelajaran atau kegiatan kelas dengan teman sekelas dan guru secara online.
+                    Pantau keuangan kas kelas secara transparan. Lihat pemasukan dan pengeluaran kas kelas.
                 </p>
             </div>
         </div>
     </div>
 </section>
 
-<!-- Recent Announcements -->
-<section class="py-20 bg-white">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="text-center mb-12">
-            <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4" data-aos="fade-up">
-                <span class="gradient-text">Pengumuman</span> Terbaru
-            </h2>
-            <p class="text-lg text-gray-600 max-w-3xl mx-auto" data-aos="fade-up" data-aos-delay="100">
-                Informasi penting dan pengumuman terbaru dari sekolah dan kelas.
-            </p>
-        </div>
-        
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            <!-- Announcement 1 -->
-            <div class="bg-gray-50 rounded-lg overflow-hidden border border-gray-200" data-aos="fade-up" data-aos-delay="200">
-                <div class="p-6">
-                    <div class="flex items-center mb-4">
-                        <div class="bg-primary-100 text-primary-800 text-xs font-semibold px-3 py-1 rounded-full">
-                            Penting
-                        </div>
-                        <span class="text-gray-500 text-sm ml-auto">2 hari lalu</span>
-                    </div>
-                    <h3 class="text-lg font-bold text-gray-900 mb-2">Ujian Semester Genap</h3>
-                    <p class="text-gray-600 mb-4">
-                        Jadwal ujian semester genap akan dilaksanakan pada tanggal 5-12 Juni 2023.
-                    </p>
-                    <a href="#" class="text-primary-600 hover:text-primary-800 font-medium text-sm flex items-center">
-                        Baca selengkapnya <i class="fas fa-arrow-right ml-2"></i>
-                    </a>
-                </div>
-            </div>
-            
-            <!-- Announcement 2 -->
-            <div class="bg-gray-50 rounded-lg overflow-hidden border border-gray-200" data-aos="fade-up" data-aos-delay="250">
-                <div class="p-6">
-                    <div class="flex items-center mb-4">
-                        <div class="bg-green-100 text-green-800 text-xs font-semibold px-3 py-1 rounded-full">
-                            Kegiatan
-                        </div>
-                        <span class="text-gray-500 text-sm ml-auto">1 minggu lalu</span>
-                    </div>
-                    <h3 class="text-lg font-bold text-gray-900 mb-2">Study Tour IT</h3>
-                    <p class="text-gray-600 mb-4">
-                        Persiapkan diri untuk study tour ke perusahaan IT pada tanggal 15 Juni 2023.
-                    </p>
-                    <a href="#" class="text-primary-600 hover:text-primary-800 font-medium text-sm flex items-center">
-                        Baca selengkapnya <i class="fas fa-arrow-right ml-2"></i>
-                    </a>
-                </div>
-            </div>
-            
-            <!-- Announcement 3 -->
-            <div class="bg-gray-50 rounded-lg overflow-hidden border border-gray-200" data-aos="fade-up" data-aos-delay="300">
-                <div class="p-6">
-                    <div class="flex items-center mb-4">
-                        <div class="bg-blue-100 text-blue-800 text-xs font-semibold px-3 py-1 rounded-full">
-                            Informasi
-                        </div>
-                        <span class="text-gray-500 text-sm ml-auto">2 minggu lalu</span>
-                    </div>
-                    <h3 class="text-lg font-bold text-gray-900 mb-2">Pembagian Raport</h3>
-                    <p class="text-gray-600 mb-4">
-                        Pembagian raport semester genap akan dilaksanakan pada tanggal 20 Juni 2023.
-                    </p>
-                    <a href="#" class="text-primary-600 hover:text-primary-800 font-medium text-sm flex items-center">
-                        Baca selengkapnya <i class="fas fa-arrow-right ml-2"></i>
-                    </a>
-                </div>
-            </div>
-        </div>
-        
-        <div class="text-center mt-10">
-            <a href="/berita" class="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-lg shadow-sm text-white bg-gradient-to-r from-primary-600 to-secondary-500 hover:from-primary-700 hover:to-secondary-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 transition-all duration-300">
-                Lihat Semua Pengumuman
-            </a>
-        </div>
-    </div>
-</section>
-
 <!-- Gallery Preview -->
-<section class="py-20 bg-gray-50">
+<section class="py-20 bg-white">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="text-center mb-12">
             <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4" data-aos="fade-up">
                 <span class="gradient-text">Galeri</span> Kegiatan
             </h2>
             <p class="text-lg text-gray-600 max-w-3xl mx-auto" data-aos="fade-up" data-aos-delay="100">
-                Dokumentasi momen-momen berharga kelas X IPPLG C.
+                Dokumentasi momen-momen berharga kelas XI PPLG C.
             </p>
         </div>
         
         <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-            <a href="#" class="group rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300" data-aos="fade-up">
-                <img src="https://source.unsplash.com/random/300x300/?classroom,1" alt="Kegiatan Belajar" class="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-500">
-            </a>
-            <a href="#" class="group rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300" data-aos="fade-up" data-aos-delay="100">
-                <img src="https://source.unsplash.com/random/300x300/?school,1" alt="Kegiatan Sekolah" class="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-500">
-            </a>
-            <a href="#" class="group rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300" data-aos="fade-up" data-aos-delay="200">
-                <img src="https://source.unsplash.com/random/300x300/?student,1" alt="Siswa" class="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-500">
-            </a>
-            <a href="#" class="group rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300" data-aos="fade-up" data-aos-delay="300">
-                <img src="https://source.unsplash.com/random/300x300/?teamwork,1" alt="Kerja Kelompok" class="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-500">
-            </a>
+            @foreach($galeriKegiatan as $kegiatan)
+            <div class="group rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300" data-aos="fade-up">
+                <img src="{{ asset('storage/' . $kegiatan->gambar) }}" alt="{{ $kegiatan->judul }}" class="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-500">
+                <div class="p-3 bg-white">
+                    <h3 class="font-semibold text-gray-800">{{ $kegiatan->judul }}</h3>
+                    <p class="text-sm text-gray-500">{{ $kegiatan->tanggal->format('d M Y') }}</p>
+                </div>
+            </div>
+            @endforeach
         </div>
         
         <div class="text-center mt-10">
@@ -223,7 +141,8 @@
     </div>
 </section>
 
-<!-- CTA Section -->
+@guest
+<!-- CTA Section (Hanya tampil untuk guest) -->
 <section class="py-16 bg-gradient-to-r from-primary-600 to-secondary-500 text-white">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
         <h2 class="text-3xl md:text-4xl font-bold mb-6" data-aos="fade-up">Bergabunglah dengan Komunitas Kami</h2>
@@ -240,4 +159,5 @@
         </div>
     </div>
 </section>
+@endguest
 @endsection
