@@ -120,7 +120,7 @@
                  x-data="{ 
                      count: 0, 
                      target: {{ $guruCount }}, 
-                     duration: 2000,
+                     duration: 000,
                      increment: 1,
                      delay: 300
                  }"
@@ -157,9 +157,9 @@
                  x-data="{ 
                      count: 0, 
                      target: {{ $kasCount }}, 
-                     duration: 2000,
+                     duration: 6000,
                      increment: 1,
-                     delay: 400
+                     delay: 300
                  }"
                  x-init="
                      $nextTick(() => {
@@ -257,7 +257,9 @@
                 <img src="{{ asset('storage/' . $kegiatan->gambar) }}" alt="{{ $kegiatan->judul }}" class="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-500">
                 <div class="p-3 bg-white">
                     <h3 class="font-semibold text-gray-800">{{ $kegiatan->judul }}</h3>
-                    <p class="text-sm text-gray-500">{{ $kegiatan->tanggal->format('d M Y') }}</p>
+                    <p class="text-sm text-gray-500">
+                    {{ $kegiatan->tanggal ? $kegiatan->tanggal->timezone('Asia/Jakarta')->format('d/m/Y H:i') : 'Tanggal tidak tersedia' }}
+                    </p>
                 </div>
             </div>
             @endforeach

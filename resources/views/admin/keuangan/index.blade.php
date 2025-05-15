@@ -17,16 +17,16 @@
         <div class="col-md-4">
             <div class="card bg-primary text-white mb-4">
                 <div class="card-body">
-                    <h5 class="card-title">Total Pemasukan</h5>
-                    <h2 class="card-text">Rp {{ number_format(Kas::pemasukan()->sum('jumlah'), 2, ',', '.') }}</h2>
+                    <h5 class="card-title">Total Pemasukan</h5>        
+                    <h2 class="card-text">Rp {{ number_format($totalPemasukan, 2, ',', '.') }}</h2>
                 </div>
             </div>
         </div>
         <div class="col-md-4">
             <div class="card bg-danger text-white mb-4">
                 <div class="card-body">
-                    <h5 class="card-title">Total Pengeluaran</h5>
-                    <h2 class="card-text">Rp {{ number_format(Kas::pengeluaran()->sum('jumlah'), 2, ',', '.') }}</h2>
+                    <h5 class="card-title">Total Pengeluaran</h5>      
+                    <h2 class="card-text">Rp {{ number_format($totalPengeluaran, 2, ',', '.') }}</h2>
                 </div>
             </div>
         </div>
@@ -105,22 +105,27 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach($transaksi as $trx)
-                        <tr>
-                            <td>{{ $trx->created_at->format('d/m/Y H:i') }}</td>
-                            <td>
-                                <span class="badge bg-{{ $trx->jenis == 'masuk' ? 'success' : 'danger' }}">
-                                    {{ ucfirst($trx->jenis) }}
-                                </span>
-                            </td>
-                            <td class="{{ $trx->jenis == 'masuk' ? 'text-success' : 'text-danger' }}">
-                                {{ $trx->jenis == 'masuk' ? '+' : '-' }} 
-                                Rp {{ number_format($trx->jumlah, 2, ',', '.') }}
-                            </td>
-                            <td>{{ $trx->keterangan }}</td>
-                        </tr>
-                        @endforeach
-                    </tbody>
+                    @foreach($transaksi as $trx)
+                    <tr>
+                        <td>{{ $trx->created_at->format('d/m/Y H:i') }}</td>
+                        <td>
+                            @if($trx->pemasukan > 0)
+                                <span class="badge bg-success">Masuk</span>
+                            @elseif($trx->pengeluaran > 0)
+                                <span class="badge bg-danger">Keluar</span>
+                            @else
+                                <span class="badge bg-secondary">-</span>
+                            @endif
+                        </td>
+                        <td class="{{ $trx->pemasukan > 0 ? 'text-success' : 'text-danger' }}">
+                            {{ $trx->pemasukan > 0 ? '+' : '-' }} Rp 
+                            {{ number_format($trx->pemasukan > 0 ? $trx->pemasukan : $trx->pengeluaran, 2, ',', '.') }}
+                        </td>
+                        <td>{{ $trx->keterangan }}</td>
+                    </tr>
+                    @endforeach
+                </tbody>
+
                 </table>
             </div>
             {{ $transaksi->links() }}

@@ -6,6 +6,8 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AdminBeritaController;
 use App\Http\Controllers\AdminKeuanganController;
 use App\Http\Controllers\AdminGaleriController;
+use App\Http\Controllers\AdminInformasiController;
+use App\Http\Controllers\AdminForumController;
 use App\Http\Controllers\BeritaController;
 use App\Http\Controllers\GaleriController;
 use App\Http\Controllers\HomeController;
@@ -50,7 +52,6 @@ Route::prefix('admin')->middleware(['auth', 'admin'])->group(function () {
     Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
     
     // Manajemen Konten
-    Route::resource('berita', AdminBeritaController::class);
     Route::resource('galeri', AdminGaleriController::class)->names([
         'index' => 'admin.galeri.index',
         'create' => 'admin.galeri.create',

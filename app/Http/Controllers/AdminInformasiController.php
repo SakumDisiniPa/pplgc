@@ -3,29 +3,15 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Siswa;
-use App\Models\Kegiatan;
-use App\Models\Kas;
-use App\Models\Galeri;
-use App\Models\Berita;
 
-class HomeController extends Controller
+class AdminInformasiController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        return view('welcome', [
-            'siswaCount' => \App\Models\Siswa::count(),
-            'kegiatanCount' => \App\Models\Galeri::where('jenis', 'kegiatan')->count(),
-            'guruCount' => \App\Models\Guru::count(),
-            'kasCount' => \App\Models\Kas::saldo(),
-            'galeriKegiatan' => \App\Models\Galeri::where('jenis', 'kegiatan')
-                                    ->latest()
-                                    ->take(4)
-                                    ->get()
-        ]);
+        //
     }
 
     /**

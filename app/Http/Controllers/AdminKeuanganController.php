@@ -11,8 +11,10 @@ class AdminKeuanganController extends Controller
     {
         $transaksi = Kas::latest()->paginate(10);
         $saldo = Kas::saldo();
-        
-        return view('admin.keuangan.index', compact('transaksi', 'saldo'));
+        $totalPemasukan = Kas::pemasukan()->sum('jumlah');
+        $totalPengeluaran = Kas::pengeluaran()->sum('jumlah');
+
+        return view('admin.keuangan.index', compact('transaksi', 'saldo', 'totalPemasukan', 'totalPengeluaran'));
     }
 
     public function tambahPemasukan(Request $request)
@@ -25,7 +27,9 @@ class AdminKeuanganController extends Controller
         Kas::create([
             'jumlah' => $request->jumlah,
             'keterangan' => $request->keterangan,
-            'jenis' => 'masuk'
+            'pemasukan' => $request->jumlah,
+            'pengeluaran' => 0,
+            'user_id' => auth()->id(),
         ]);
 
         return back()->with('success', 'Pemasukan berhasil ditambahkan!');
@@ -33,8 +37,8 @@ class AdminKeuanganController extends Controller
 
     public function tambahPengeluaran(Request $request)
     {
-        $saldo = Kas::saldo();
-        
+        $saldo = Kas::sum('pemasukan') - Kas::sum('pengeluaran');
+
         $request->validate([
             'jumlah' => "required|numeric|min:1000|max:$saldo",
             'keterangan' => 'required|string|max:255'
@@ -43,7 +47,9 @@ class AdminKeuanganController extends Controller
         Kas::create([
             'jumlah' => $request->jumlah,
             'keterangan' => $request->keterangan,
-            'jenis' => 'keluar'
+            'pemasukan' => 0,
+            'pengeluaran' => $request->jumlah,
+            'user_id' => auth()->id(),
         ]);
 
         return back()->with('success', 'Pengeluaran berhasil dicatat!');
@@ -51,8 +57,8 @@ class AdminKeuanganController extends Controller
 
     public function laporan()
     {
-        $pemasukan = Kas::pemasukan()->sum('jumlah');
-        $pengeluaran = Kas::pengeluaran()->sum('jumlah');
+        $pemasukan = Kas::sum('pemasukan');
+        $pengeluaran = Kas::sum('pengeluaran');
         $saldo = $pemasukan - $pengeluaran;
         $transaksi = Kas::latest()->get();
 

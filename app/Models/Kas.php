@@ -6,29 +6,43 @@ use Illuminate\Database\Eloquent\Model;
 
 class Kas extends Model
 {
+    protected $table = 'kas';
+
     protected $fillable = [
         'jumlah',
         'keterangan',
-        'jenis'
+        'pemasukan',
+        'pengeluaran',
+        'user_id',
     ];
 
-    // Scope untuk pemasukan
+    // Scope: hanya pemasukan
     public function scopePemasukan($query)
     {
-        return $query->where('jenis', 'masuk');
+        return $query->where('pemasukan', '>', 0);
     }
 
-    // Scope untuk pengeluaran
+    // Scope: hanya pengeluaran
     public function scopePengeluaran($query)
     {
-        return $query->where('jenis', 'keluar');
+        return $query->where('pengeluaran', '>', 0);
     }
 
-    // Hitung saldo saat ini
+    // Fungsi untuk total pemasukan
+    public static function totalPemasukan()
+    {
+        return self::sum('pemasukan');
+    }
+
+    // Fungsi untuk total pengeluaran
+    public static function totalPengeluaran()
+    {
+        return self::sum('pengeluaran');
+    }
+
+    // Fungsi saldo kas (pemasukan - pengeluaran)
     public static function saldo()
     {
-        $pemasukan = self::pemasukan()->sum('jumlah');
-        $pengeluaran = self::pengeluaran()->sum('jumlah');
-        return $pemasukan - $pengeluaran;
+        return self::totalPemasukan() - self::totalPengeluaran();
     }
 }
