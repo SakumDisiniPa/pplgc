@@ -52,14 +52,45 @@ Route::prefix('admin')->middleware(['auth', 'admin'])->group(function () {
     // Manajemen Konten
     Route::resource('berita', AdminBeritaController::class);
     Route::resource('galeri', AdminGaleriController::class)->names([
+        'index' => 'admin.galeri.index',
         'create' => 'admin.galeri.create',
-        'store' => 'admin.galeri.store'
+        'store' => 'admin.galeri.store',
+        'show' => 'admin.galeri.show',
+        'edit' => 'admin.galeri.edit',
+        'update' => 'admin.galeri.update',
+        'destroy' => 'admin.galeri.destroy'
     ]);
-    Route::resource('forum', AdminForumController::class);
-    Route::resource('informasi', AdminInformasiController::class);
+    //forum
+    Route::resource('forum', AdminForumController::class)->names([
+        'index' => 'admin.forum.index',
+        'create' => 'admin.forum.create',
+        'store' => 'admin.forum.store',
+        'show' => 'admin.forum.show',
+        'edit' => 'admin.forum.edit', 
+        'update' => 'admin.forum.update',
+        'destroy' => 'admin.forum.destroy'
+    ]);
+
+    Route::resource('informasi', AdminInformasiController::class)->names([
+        'index' => 'admin.informasi.index',
+        'create' => 'admin.informasi.create',
+        'store' => 'admin.informasi.store',
+        'show' => 'admin.informasi.show',
+        'edit' => 'admin.informasi.edit',
+        'update' => 'admin.informasi.update',
+        'destroy' => 'admin.informasi.destroy'
+    ]);
     
     // Manajemen User
-    Route::resource('users', AdminUserController::class);
+    Route::resource('users', AdminInformasiController::class)->names([
+        'index' => 'admin.users.index',
+        'create' => 'admin.users.create',
+        'store' => 'admin.users.store',
+        'show' => 'admin.users.show',
+        'edit' => 'admin.users.edit',
+        'update' => 'admin.users.update',
+        'destroy' => 'admin.users.destroy'
+    ]);
     Route::post('/users/{user}/change-role', [AdminUserController::class, 'changeRole'])
          ->name('users.change-role');
     
@@ -77,7 +108,13 @@ Route::prefix('admin')->middleware(['auth', 'admin'])->group(function () {
          ->name('admin.keuangan.laporan');
 
     Route::resource('berita', AdminBeritaController::class)->names([
-            'create' => 'admin.berita.create'
+            'index' => 'admin.berita.index',
+            'create' => 'admin.berita.create',
+            'store' => 'admin.berita.store',
+            'show' => 'admin.berita.show',
+            'edit' => 'admin.berita.edit',
+            'update' => 'admin.berita.update',
+            'destroy' => 'admin.berita.destroy'
         ]);
 });
 
@@ -88,3 +125,4 @@ Route::get('/berita/{berita}', [BeritaController::class, 'show'])->name('berita.
 Route::resource('galeri', GaleriController::class);
 
 require __DIR__.'/auth.php';
+    

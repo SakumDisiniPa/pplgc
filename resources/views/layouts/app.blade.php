@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ $title ?? 'Website Kelas' }}</title>
+    <link rel="icon" href="{{ asset('favicon.ico') }}" type="image/ico"/>
     
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -202,7 +203,7 @@
                 <!-- Logo -->
                 <div class="flex-shrink-0 flex items-center">
                     <a href="/" class="text-3xl font-bold gradient-text flex items-center">
-                        <i class="fas fa-graduation-cap mr-2"></i>
+                    <img src="{{ asset('logo-pplg.png') }}" alt="Logo" class="h-12"> 
                         XI PPLG C
                     </a>
                 </div>
@@ -349,8 +350,8 @@
                 <!-- About Section -->
                 <div class="space-y-6" data-aos="fade-up" data-aos-delay="100">
                     <div class="flex items-center">
-                        <i class="fas fa-graduation-cap text-3xl gradient-text mr-2"></i>
-                        <span class="text-2xl font-bold gradient-text">XI PPLG C</span>
+                        <img src="{{ asset('logo-pplg.png') }}" alt="Logo" class="h-10"> 
+                        <span class="text-2xl font-bold gradient-text"> XI PPLG C</span>
                     </div>
                     <p class="text-gray-400 text-sm leading-relaxed">
                         Website resmi kelas XI PPLG C SMKN 1 PADAHERANG. Tempat berbagi informasi dan kegiatan kelas.

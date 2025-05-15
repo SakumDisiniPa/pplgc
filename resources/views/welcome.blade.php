@@ -22,13 +22,13 @@
                 </div>
             </div>
             <div class="relative" data-aos="fade-left">
-                <div class="relative max-w-md mx-auto">
-                    <div class="absolute -top-6 -left-6 w-32 h-32 bg-primary-400 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob"></div>
-                    <div class="absolute -bottom-8 -right-8 w-32 h-32 bg-secondary-400 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-2000"></div>
-                    <div class="absolute top-0 -right-4 w-32 h-32 bg-yellow-400 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-4000"></div>
-                    <div class="relative bg-white p-1 rounded-2xl shadow-xl">
-                        <img src="{{ asset('images/classroom.jpg') }}" alt="Kelas XI PPLG C" class="rounded-xl w-full h-auto">
-                    </div>
+            <div class="relative max-w-md mx-auto w-44 h-44">
+                <div class="absolute top-1/2 left-1/4 transform -translate-x-1/2 -translate-y-1/2 w-28 h-28 bg-primary-400 rounded-full mix-blend-multiply filter blur-md opacity-50 animate-blob"></div>
+                <div class="absolute top-1/2 right-1/4 transform translate-x-1/2 -translate-y-1/2 w-28 h-28 bg-secondary-400 rounded-full mix-blend-multiply filter blur-md opacity-50 animate-blob animation-delay-2000"></div>
+                <div class="absolute top-1/4 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-28 h-28 bg-yellow-400 rounded-full mix-blend-multiply filter blur-md opacity-50 animate-blob animation-delay-4000"></div>
+                <img src="{{ asset('logo-pplg.png') }}" alt="Kelas XI PPLG C" class="rounded-xl w-40 h-auto relative z-10 mx-auto block" />
+            </div>
+            </div>
                 </div>
             </div>
         </div>
@@ -36,25 +36,155 @@
     <div class="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-white to-transparent"></div>
 </section>
 
-<!-- Dashboard Stats Section -->
+<!-- Dashboard Stats Section with Counting Animation -->
 <section class="py-12 bg-white">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
-            <div class="p-6 rounded-xl bg-gray-50 border border-gray-100" data-aos="fade-up">
-                <div class="text-3xl font-bold text-primary-600 mb-2">{{ $siswaCount }}</div>
-                <div class="text-gray-600 text-sm font-medium">Jumlah Siswa</div>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            <!-- Siswa Card -->
+            <div class="p-6 rounded-xl bg-gradient-to-br from-blue-50 to-blue-100 border border-blue-200 shadow-sm transition-all hover:shadow-md" 
+                 data-aos="fade-up"
+                 x-data="{ 
+                     count: 0, 
+                     target: {{ $siswaCount }}, 
+                     duration: 3000,
+                     increment: 1,
+                     delay: 10
+                 }"
+                 x-init="
+                     $nextTick(() => {
+                         let start = null;
+                         const step = (timestamp) => {
+                             if (!start) start = timestamp;
+                             const progress = timestamp - start;
+                             const percentage = Math.min(progress / duration, 1);
+                             count = Math.floor(percentage * target);
+                             
+                             if (percentage < 1) {
+                                 window.requestAnimationFrame(step);
+                             } else {
+                                 count = target;
+                             }
+                         };
+                         setTimeout(() => {
+                             window.requestAnimationFrame(step);
+                         }, delay);
+                     })">
+                <div class="flex items-center justify-center w-12 h-12 mb-4 rounded-full bg-blue-100 text-blue-600 mx-auto">
+                    <i class="fas fa-user-graduate text-xl"></i>
+                </div>
+                <div class="text-4xl font-bold text-blue-600 mb-2" x-text="count.toLocaleString()"></div>
+                <div class="text-gray-600 font-medium">Total Siswa</div>
             </div>
-            <div class="p-6 rounded-xl bg-gray-50 border border-gray-100" data-aos="fade-up" data-aos-delay="100">
-                <div class="text-3xl font-bold text-secondary-600 mb-2">{{ $kegiatanCount }}</div>
-                <div class="text-gray-600 text-sm font-medium">Jumlah Kegiatan</div>
+
+            <!-- Kegiatan Card -->
+            <div class="p-6 rounded-xl bg-gradient-to-br from-green-50 to-green-100 border border-green-200 shadow-sm transition-all hover:shadow-md" 
+                 data-aos="fade-up"
+                 data-aos-delay="100"
+                 x-data="{ 
+                     count: 0, 
+                     target: {{ $kegiatanCount }}, 
+                     duration: 2000,
+                     increment: 1,
+                     delay: 200
+                 }"
+                 x-init="
+                     $nextTick(() => {
+                         let start = null;
+                         const step = (timestamp) => {
+                             if (!start) start = timestamp;
+                             const progress = timestamp - start;
+                             const percentage = Math.min(progress / duration, 1);
+                             count = Math.floor(percentage * target);
+                             
+                             if (percentage < 1) {
+                                 window.requestAnimationFrame(step);
+                             } else {
+                                 count = target;
+                             }
+                         };
+                         setTimeout(() => {
+                             window.requestAnimationFrame(step);
+                         }, delay);
+                     })">
+                <div class="flex items-center justify-center w-12 h-12 mb-4 rounded-full bg-green-100 text-green-600 mx-auto">
+                    <i class="fas fa-calendar-check text-xl"></i>
+                </div>
+                <div class="text-4xl font-bold text-green-600 mb-2" x-text="count.toLocaleString()"></div>
+                <div class="text-gray-600 font-medium">Kegiatan</div>
             </div>
-            <div class="p-6 rounded-xl bg-gray-50 border border-gray-100" data-aos="fade-up" data-aos-delay="200">
-                <div class="text-3xl font-bold text-yellow-600 mb-2">{{ $guruCount }}</div>
-                <div class="text-gray-600 text-sm font-medium">Jumlah Guru</div>
+
+            <!-- Guru Card -->
+            <div class="p-6 rounded-xl bg-gradient-to-br from-amber-50 to-amber-100 border border-amber-200 shadow-sm transition-all hover:shadow-md" 
+                 data-aos="fade-up"
+                 data-aos-delay="200"
+                 x-data="{ 
+                     count: 0, 
+                     target: {{ $guruCount }}, 
+                     duration: 2000,
+                     increment: 1,
+                     delay: 300
+                 }"
+                 x-init="
+                     $nextTick(() => {
+                         let start = null;
+                         const step = (timestamp) => {
+                             if (!start) start = timestamp;
+                             const progress = timestamp - start;
+                             const percentage = Math.min(progress / duration, 1);
+                             count = Math.floor(percentage * target);
+                             
+                             if (percentage < 1) {
+                                 window.requestAnimationFrame(step);
+                             } else {
+                                 count = target;
+                             }
+                         };
+                         setTimeout(() => {
+                             window.requestAnimationFrame(step);
+                         }, delay);
+                     })">
+                <div class="flex items-center justify-center w-12 h-12 mb-4 rounded-full bg-amber-100 text-amber-600 mx-auto">
+                    <i class="fas fa-chalkboard-teacher text-xl"></i>
+                </div>
+                <div class="text-4xl font-bold text-amber-600 mb-2" x-text="count.toLocaleString()"></div>
+                <div class="text-gray-600 font-medium">Guru</div>
             </div>
-            <div class="p-6 rounded-xl bg-gray-50 border border-gray-100" data-aos="fade-up" data-aos-delay="300">
-                <div class="text-3xl font-bold text-purple-600 mb-2">Rp {{ number_format($kasCount, 0, ',', '.') }}</div>
-                <div class="text-gray-600 text-sm font-medium">Jumlah Uang Kas</div>
+
+            <!-- Kas Card -->
+            <div class="p-6 rounded-xl bg-gradient-to-br from-purple-50 to-purple-100 border border-purple-200 shadow-sm transition-all hover:shadow-md" 
+                 data-aos="fade-up"
+                 data-aos-delay="300"
+                 x-data="{ 
+                     count: 0, 
+                     target: {{ $kasCount }}, 
+                     duration: 2000,
+                     increment: 1,
+                     delay: 400
+                 }"
+                 x-init="
+                     $nextTick(() => {
+                         let start = null;
+                         const step = (timestamp) => {
+                             if (!start) start = timestamp;
+                             const progress = timestamp - start;
+                             const percentage = Math.min(progress / duration, 1);
+                             count = Math.floor(percentage * target);
+                             
+                             if (percentage < 1) {
+                                 window.requestAnimationFrame(step);
+                             } else {
+                                 count = target;
+                             }
+                         };
+                         setTimeout(() => {
+                             window.requestAnimationFrame(step);
+                         }, delay);
+                     })">
+                <div class="flex items-center justify-center w-12 h-12 mb-4 rounded-full bg-purple-100 text-purple-600 mx-auto">
+                    <i class="fas fa-wallet text-xl"></i>
+                </div>
+                <div class="text-4xl font-bold text-purple-600 mb-2">Rp <span x-text="new Intl.NumberFormat('id-ID').format(count)"></span></div>
+                <div class="text-gray-600 font-medium">Uang Kas</div>
             </div>
         </div>
     </div>
