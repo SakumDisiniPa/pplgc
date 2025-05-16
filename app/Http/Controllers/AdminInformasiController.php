@@ -2,63 +2,54 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Siswa;
+use App\Models\Guru;
 use Illuminate\Http\Request;
 
 class AdminInformasiController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        //
-    }
+        try {
+            // Ambil ketua dan wakil
+            $ketua = Siswa::where('jabatan', 'Ketua Kelas')->first();
+            $wakil = Siswa::where('jabatan', 'Wakil Ketua')->first();
+            
+            // Ambil pengurus lainnya
+            $pengurus = Siswa::whereIn('jabatan', [
+                    'Bendahara', 
+                    'Sekretaris', 
+                    'Kebersihan', 
+                    'Keamanan', 
+                    'Anggota'
+                ])
+                ->orderByRaw("FIELD(jabatan, 'Bendahara', 'Sekretaris', 'Kebersihan', 'Keamanan', 'Anggota')")
+                ->get()
+                ->groupBy('jabatan');
+            
+            // Ambil guru
+            $gurus = Guru::orderBy('jabatan')->get();
+            
+            // Hitung jumlah siswa
+            $jumlahSiswa = Siswa::count();
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
+            return view('admin.informasi.index', [
+                'ketua' => $ketua,
+                'wakil' => $wakil,
+                'pengurus' => $pengurus,
+                'gurus' => $gurus,
+                'jumlahSiswa' => $jumlahSiswa
+            ]);
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
+        } catch (\Exception $e) {
+            return view('admin.informasi.index', [
+                'error' => 'Data struktur kelas belum tersedia',
+                'ketua' => null,
+                'wakil' => null,
+                'pengurus' => collect(),
+                'gurus' => collect(),
+                'jumlahSiswa' => 0
+            ]);
+        }
     }
 }

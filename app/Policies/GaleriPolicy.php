@@ -37,8 +37,9 @@ class GaleriPolicy
      */
     public function update(User $user, Galeri $galeri): bool
     {
-        //
+        return $user->id === $galeri->user_id;
     }
+
 
     /**
      * Determine whether the user can delete the model.

@@ -15,11 +15,17 @@ return new class extends Migration
             $table->id();
             $table->string('nip')->unique();
             $table->string('nama');
+            $table->enum('jenis_kelamin', ['L', 'P']);
+            $table->string('tempat_lahir');
+            $table->date('tanggal_lahir');
+            $table->text('alamat');
+            $table->string('email')->unique();
+            $table->string('no_hp');
+            $table->string('instagram')->nullable();
+            $table->string('facebook')->nullable();
+            $table->string('foto')->nullable();
             $table->string('jabatan');
             $table->string('mapel');
-            $table->string('foto')->nullable();
-            $table->string('no_hp')->nullable();
-            $table->string('email')->nullable();
             $table->timestamps();
         });
     }

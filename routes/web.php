@@ -7,12 +7,15 @@ use App\Http\Controllers\AdminBeritaController;
 use App\Http\Controllers\AdminKeuanganController;
 use App\Http\Controllers\AdminGaleriController;
 use App\Http\Controllers\AdminInformasiController;
+use App\Http\Controllers\AdminGuruController;
+use App\Http\Controllers\AdminSiswaController;
 use App\Http\Controllers\AdminForumController;
 use App\Http\Controllers\BeritaController;
 use App\Http\Controllers\GaleriController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\InformasiController;
 use App\Http\Controllers\ForumController;
+use App\Http\Controllers\CommentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -82,6 +85,7 @@ Route::prefix('admin')->middleware(['auth', 'admin'])->group(function () {
         'destroy' => 'admin.informasi.destroy'
     ]);
     
+    
     // Manajemen User
     Route::resource('users', AdminInformasiController::class)->names([
         'index' => 'admin.users.index',
@@ -124,6 +128,9 @@ Route::get('/berita/create', [BeritaController::class, 'create'])->name('berita.
 Route::post('/berita', [BeritaController::class, 'store'])->name('berita.store');
 Route::get('/berita/{berita}', [BeritaController::class, 'show'])->name('berita.show');
 Route::resource('galeri', GaleriController::class);
+
+Route::post('/galeri/{galeri}/comments', [CommentController::class, 'store'])->name('comments.store');
+
 
 require __DIR__.'/auth.php';
     

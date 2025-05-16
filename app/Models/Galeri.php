@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Casts\Attribute;
+use App\Models\Comment; 
 
 class Galeri extends Model
 {
@@ -144,5 +145,9 @@ class Galeri extends Model
                 $image->delete(); // This will trigger GaleriImage's deleting event
             });
         });
+    }
+    public function comments(): HasMany
+    {
+        return $this->hasMany(Comment::class);
     }
 }

@@ -443,6 +443,9 @@
         </div>
     </footer>
 
+    <!-- Scripts -->
+    @stack('scripts')
+    
     <!-- Back to Top Button -->
     <button id="back-to-top" class="fixed bottom-8 right-8 bg-gradient-to-r from-primary-600 to-secondary-500 text-white w-12 h-12 rounded-full shadow-lg flex items-center justify-center opacity-0 invisible transition-all duration-300 z-50 hover:shadow-xl">
         <i class="fas fa-arrow-up"></i>
